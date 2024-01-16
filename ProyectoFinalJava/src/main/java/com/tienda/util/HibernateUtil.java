@@ -22,30 +22,12 @@ public class HibernateUtil {
 
                 // Propiedades de conexio de Hibernate
                 Properties settings = new Properties();
-                //Arlette
+
                 settings.put(Environment.DRIVER, "org.postgresql.Driver");
                 settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/ProyectoFinalJava");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
                 settings.put(Environment.USER, "postgres");
                 settings.put(Environment.PASS, "postgres");
-                //Robert
-                /*settings.put(Environment.DRIVER, "org.postgresql.Driver");
-                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/proyecto4");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
-                settings.put(Environment.USER, "postgres");
-                settings.put(Environment.PASS, "postgres");*/
-                //Alvaro
-                /*settings.put(Environment.DRIVER, "org.postgresql.Driver");
-                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/proyecto4");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
-                settings.put(Environment.USER, "postgres");
-                settings.put(Environment.PASS, "postgres");*/
-                //Constanza
-                /*settings.put(Environment.DRIVER, "org.postgresql.Driver");
-                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/proyecto4");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
-                settings.put(Environment.USER, "postgres");
-                settings.put(Environment.PASS, "postgres");*/
 
                 settings.put(Environment.SHOW_SQL, "false");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
