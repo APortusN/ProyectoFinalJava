@@ -4,6 +4,7 @@ import com.tienda.model.Usuario;
 import com.tienda.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -27,15 +28,18 @@ public class UsuarioDAO {
             return null;
         }
     }
-    public List<Usuario> findByName(String name){
+    public Usuario findByEmail(String email){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("FROM Usuario WHERE firstName='"+name+"'").list();
+            Query query = session.createQuery("FROM Usuario WHERE email=:email");
+            query.setParameter("email", email);
+            return (Usuario) query.uniqueResult();
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
         }
     }
+
     public static void insert(Usuario usuario){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();

@@ -11,7 +11,7 @@ public class ProductoDAO {
     public Producto findById(Long id){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.get(Producto.class, 1l);
+            return session.get(Producto.class, id);
         } catch (Exception ex){
             ex.printStackTrace();
             return null;

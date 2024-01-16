@@ -1,6 +1,5 @@
 package com.tienda.util;
 
-import com.tienda.model.Categoria;
 import com.tienda.model.Pedido;
 import com.tienda.model.Producto;
 import com.tienda.model.Usuario;
@@ -48,7 +47,7 @@ public class HibernateUtil {
                 settings.put(Environment.USER, "postgres");
                 settings.put(Environment.PASS, "postgres");*/
 
-                settings.put(Environment.SHOW_SQL, "true");
+                settings.put(Environment.SHOW_SQL, "false");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 //Manejar la construccion de tablas de la base de datos
                 settings.put(Environment.HBM2DDL_AUTO, "update");
@@ -58,7 +57,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Usuario.class);
                 configuration.addAnnotatedClass(Producto.class);
                 configuration.addAnnotatedClass(Pedido.class);
-                configuration.addAnnotatedClass(Categoria.class);
+
 
                 //Servicio de parametros de conexion
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

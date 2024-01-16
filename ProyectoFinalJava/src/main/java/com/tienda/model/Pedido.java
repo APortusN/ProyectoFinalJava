@@ -3,6 +3,7 @@ package com.tienda.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-    private Date fechaPedido;
+    private LocalDate fechaPedido;
     private Double montoTotal;
     private Boolean despacho;
 
@@ -32,17 +33,24 @@ public class Pedido {
 
     }
 
-    public Pedido(Date fechaPedido, Double montoTotal, Boolean despacho) {
+    public Pedido(LocalDate fechaPedido, Double montoTotal, Boolean despacho) {
         this.fechaPedido = fechaPedido;
         this.montoTotal = montoTotal;
         this.despacho = despacho;
     }
 
-    public Date getFechaPedido() {
+    public Pedido(LocalDate fechaPedido, Double montoTotal, Boolean despacho, Usuario usuario) {
+        this.fechaPedido = fechaPedido;
+        this.montoTotal = montoTotal;
+        this.despacho = despacho;
+        this.usuario = usuario;
+    }
+
+    public LocalDate getFechaPedido() {
         return fechaPedido;
     }
 
-    public void setFechaPedido(Date fechaPedido) {
+    public void setFechaPedido(LocalDate fechaPedido) {
         this.fechaPedido = fechaPedido;
     }
 

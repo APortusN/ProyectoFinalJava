@@ -18,23 +18,18 @@ public class Producto {
 
     private String marca;
 
-    @ManyToMany(mappedBy = "productos")
-    private Set<Pedido> pedidos;
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
-
+    private int cantidadProductos;
 
     public Producto() {
 
     }
 
-    public Producto(String nombreProducto, Double precio, String descripcion, String marca) {
+    public Producto(String nombreProducto, Double precio, String descripcion, String marca, int cantidadProductos) {
         this.nombreProducto = nombreProducto;
         this.precio = precio;
         this.descripcion = descripcion;
         this.marca = marca;
+        this.cantidadProductos = cantidadProductos;
     }
 
     public String getNombreProducto() {
@@ -67,5 +62,17 @@ public class Producto {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public int getCantidadProductos() {
+        return cantidadProductos;
+    }
+
+    public void setCantidadProductos(int cantidadProductos) {
+        this.cantidadProductos = cantidadProductos;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

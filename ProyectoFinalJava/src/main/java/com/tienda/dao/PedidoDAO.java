@@ -1,9 +1,11 @@
 package com.tienda.dao;
 
 import com.tienda.model.Pedido;
+import com.tienda.model.Usuario;
 import com.tienda.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -18,6 +20,19 @@ public class PedidoDAO {
             return null;
         }
     }
+
+    public List<Pedido> findByUserID(Long id){
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Pedido WHERE usuario_id=:id");
+            query.setParameter("id", id);
+            return query.list();
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public List<Pedido> findAll(){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
@@ -36,7 +51,7 @@ public class PedidoDAO {
             return null;
         }
     }
-    public static void insert(Pedido pedido){
+    public static void insert (Pedido pedido){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
