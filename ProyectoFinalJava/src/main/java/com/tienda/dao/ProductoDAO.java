@@ -29,7 +29,7 @@ public class ProductoDAO {
     public List<Producto> findByName(String name){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("FROM Producto WHERE firstName='"+name+"'").list();
+            return session.createQuery("FROM Producto WHERE nombreproducto='"+name+"'").list();
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
