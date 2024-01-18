@@ -43,7 +43,7 @@ public class App {
             System.out.println("*********************************************");
             System.out.println("********        MENU PRINCIPAL       ********");
             System.out.println("*********************************************");
-            System.out.println("1.Registarse 2.Ver catalogo de productos 3.Ver carrito de compra 4.Pagar 5.Ver historial de compras y deudas 6.Buscar productos 7.Salir ");
+            System.out.println("1-REGISTRARSE\n2-VER CATALOGO PRODUCTOS\n3-VER CARRITO COMPRA\n4-PAGAR\n5-VER HISTORIAL DE COMPRAS\n6-BUSCAR PRODUCTOS\n7-SALIR ");
             int opcion = 0;
             try {
                 opcion = scanner.nextInt();
@@ -80,7 +80,7 @@ public class App {
                         break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Error: Debe ingresar un número de menu válido.");
+                System.out.println("ERROR: Debe ingresar un número de menu válido.");
             }
 
         }
@@ -94,7 +94,6 @@ public class App {
         Scanner scanner = new Scanner(System.in);
 
         do {
-
             System.out.println("Ingrese nombre usuario:");
             nombreUsuario = scanner.next();
         }while(!sinNumeros(nombreUsuario));
@@ -105,8 +104,8 @@ public class App {
         }while(!sinNumeros(apellidoUsuario));
 
         do{
-        System.out.println("Ingrese email usuario:");
-        emailUsuario = scanner.next();
+            System.out.println("Ingrese email usuario:");
+            emailUsuario = scanner.next();
         }while(!esCorreo(emailUsuario));
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -114,11 +113,11 @@ public class App {
         usuarioDAO.insert(newUsuario);
         System.out.println("*********************************************");
         System.out.println("*                                           *");
-        System.out.println("*               Bienvenid@!                 *");
+        System.out.println("*               BIENVENID@!                 *");
+        System.out.println("*    "+nombreUsuario+" "+apellidoUsuario+  "*");
         System.out.println("*                                           *");
         System.out.println("*********************************************");
-        System.out.println("Bienvenido a nuestra tienda: "+nombreUsuario+" "+apellidoUsuario);
-        System.out.println("El correo registrado es: " + emailUsuario);
+        System.out.println("EL CORREO REGISTRADO ES: " + emailUsuario);
     }
 
     public static void verProductos(Carrito carrito) {
@@ -150,34 +149,36 @@ public class App {
             Scanner scanner = new Scanner(System.in);
 
             try{
-            System.out.println("Ingrese el ID del producto que desea agregar al carrito (para salir escriba 0) : ");
-            agregar = scanner.nextLong();
+                System.out.println("Ingrese el ID del producto que desea agregar al carrito (para salir escriba 0) : ");
+                agregar = scanner.nextLong();
 
 
-            if (agregar != 0 ) {
+                if (agregar != 0 ) {
 
-                Producto producto = productoDAO.findById(agregar);
+                    Producto producto = productoDAO.findById(agregar);
 
-                int cantidad = producto.getCantidadProductos();
-                if (cantidad> 0 ){
-                    producto.setCantidadProductos(cantidad-1);
-                    productoDAO.update(producto);
-                    System.out.println("*********************************************");
-                    System.out.println("*      Producto agregado                    *");
-                    System.out.println("*********************************************");
-                    System.out.println("El producto: " + producto.getNombreProducto() + " ha sido agregado a su carrito.");
-                    carrito.agregarProducto(producto);
-                }else{
-                    System.out.println("No queda stock del producto seleccionado");
+                    int cantidad = producto.getCantidadProductos();
+                    if (cantidad> 0 ){
+                        producto.setCantidadProductos(cantidad-1);
+                        productoDAO.update(producto);
+                        System.out.println("*********************************************");
+                        System.out.println("*                                           *");
+                        System.out.println("*             PRODUCTO AGREGADO             *");
+                        System.out.println("*                                           *");
+                        System.out.println("*********************************************");
+                        System.out.println("El producto: " + producto.getNombreProducto() + " ha sido agregado a su carrito.");
+                        carrito.agregarProducto(producto);
+                    }else{
+                        System.out.println("No queda stock del producto seleccionado");
+                    }
+
                 }
 
-            }
-
             } catch (InputMismatchException e) {
-                System.out.println("Error: Debe ingresar un número de producto válido.");
+                System.out.println("ERROR: Debe ingresar un número de producto válido.");
             } catch (NullPointerException e) {
-            System.out.println("Error: Producto no encontrado en el catalogo.");
-        }
+                System.out.println("ERROR: Producto no encontrado en el catalogo.");
+            }
 
         }while (agregar != 0 );
     }
@@ -192,26 +193,27 @@ public class App {
 
         try{
             do{
-            System.out.println("Ingrese su correo electronico:");
-            obtenerCorreo = scanner.next();
+                System.out.println("Ingrese su correo electronico:");
+                obtenerCorreo = scanner.next();
             }while(!esCorreo(obtenerCorreo));
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             Usuario newUsuario2 = usuarioDAO.findByEmail(obtenerCorreo);
 
             System.out.println("*********************************************");
-            System.out.println("*           Bienvenid@                      *");
+            System.out.println("*                                           *");
+            System.out.println("*               BIENVENID@!                 *");
+            System.out.println("* "+newUsuario2.getNombre()+" "+newUsuario2.getApellido()+  "*");
+            System.out.println("*                                           *");
             System.out.println("*********************************************");
 
-            System.out.println("Bienvenido: " + newUsuario2.getNombre() + " " + newUsuario2.getApellido());
+            System.out.println("El TOTAL de su compra es de: $" + totalCarrito);
 
-            System.out.println("El total de su compra es de: $" + totalCarrito);
-
-            System.out.println("Desea pagar el carrito: 1.Si 2.Salir");
+            System.out.println("Desea pagar el carrito:\n1-SI\n2-SALIR");
             int opcion = scanner.nextInt();
 
             if (opcion == 1) {
-                System.out.println("Desea despacho: 1.Si 2.No");
+                System.out.println("Desea despacho:\n1-SI\n2-NO");
                 int opcionDespacho = scanner.nextInt();
                 if (opcionDespacho == 1) {
                     despacho = true;
@@ -224,11 +226,13 @@ public class App {
                 pedidoDAO.insert(pedido);
                 List<Producto> imprimirCarrito = new ArrayList<>(carrito.getProductos());
                 System.out.println("*********************************************");
-                System.out.println("*           Pedido Pagado                   *");
+                System.out.println("*                                           *");
+                System.out.println("*              PEDIDO PAGADO                *");
+                System.out.println("*                                           *");
                 System.out.println("*********************************************");
                 System.out.println("Ha pagado su carrito y el pedido ha sido generado");
                 System.out.println("*********************************************");
-                System.out.println("*          BOLETA DE COMPRA                 *");
+                System.out.println("*             BOLETA DE COMPRA              *");
                 System.out.println("*********************************************");
                 System.out.println("Producto           Precio");
                 System.out.println("---------------------------------------------");
@@ -243,9 +247,10 @@ public class App {
             }
 
         } catch (InputMismatchException e) {
-        System.out.println("Error: Debe ingresar un número de opción válido.");
+            System.out.println("ERROR: Debe ingresar un número de opción válido.");
         } catch (NullPointerException e) {
-            System.out.println("Error: Correo no registrado como cliente.");}
+            System.out.println("ERROR: Correo no registrado como cliente.");
+        }
     }
 
     public static void verHistorial(){
@@ -254,18 +259,19 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         try{
             do{
-            System.out.println("Ingrese su correo electronico:");
-            obtenerCorreo = scanner.next();
+                System.out.println("Ingrese su correo electronico:");
+                obtenerCorreo = scanner.next();
             }while(!esCorreo(obtenerCorreo));
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             Usuario newUsuario3 = usuarioDAO.findByEmail(obtenerCorreo);
 
             System.out.println("*********************************************");
-            System.out.println("*           Bienvenid@                      *");
+            System.out.println("*                                           *");
+            System.out.println("*               BIENVENID@!                 *");
+            System.out.println("*    "+newUsuario3.getNombre()+" "+newUsuario3.getApellido()+  "*");
+            System.out.println("*                                           *");
             System.out.println("*********************************************");
-
-            System.out.println("Bienvenido: " + newUsuario3.getNombre() + " " + newUsuario3.getApellido());
 
             PedidoDAO pedidoDAO = new PedidoDAO();
             List<Pedido> listaDePedidos = pedidoDAO.findByUserID(newUsuario3.getId());
@@ -278,7 +284,7 @@ public class App {
                 String estadoDespacho = "";
 
                 if (pedido.getDespacho() == true) {
-                    estadoDespacho = "Enviado";
+                    estadoDespacho = "Enviado.";
                 } else {
                     estadoDespacho = "Pedido retirado en tienda.";
                 }
@@ -288,7 +294,7 @@ public class App {
             }
 
         } catch (NullPointerException e) {
-            System.out.println("Error: Correo no registrado como cliente.");}
+            System.out.println("ERROR: Correo no registrado como cliente.");}
     }
 
     public static void buscadorProductos(Carrito carrito){
@@ -301,48 +307,50 @@ public class App {
         buscar = scanner.next();
         productoBuscar = capitalizarPrimeraLetra(buscar);
         do{
-        ProductoDAO productoDAO = new ProductoDAO();
-        List<Producto> listaDeProductos = productoDAO.findByName(productoBuscar);
+            ProductoDAO productoDAO = new ProductoDAO();
+            List<Producto> listaDeProductos = productoDAO.findByName(productoBuscar);
 
-        int contador=1;
+            int contador=1;
 
-        for (Producto producto : listaDeProductos) {
-            System.out.println("N°: "+contador+" - ID: " + producto.getId() +
-                    ", Nombre: " + producto.getNombreProducto() +
-                    ", Precio: " + producto.getPrecio()+
-                    ", Descripción: " + producto.getDescripcion()+
-                    ", Marca: " + producto.getMarca()+
-                    ", Cantidad: " + producto.getCantidadProductos());
-            contador++;
-            try{
-                System.out.println("Ingrese el ID del producto que desea agregar al carrito (para salir escriba 0) : ");
-                agregar = scanner.nextLong();
+            for (Producto producto : listaDeProductos) {
+                System.out.println("N°: "+contador+" - ID: " + producto.getId() +
+                        ", Nombre: " + producto.getNombreProducto() +
+                        ", Precio: " + producto.getPrecio()+
+                        ", Descripción: " + producto.getDescripcion()+
+                        ", Marca: " + producto.getMarca()+
+                        ", Cantidad: " + producto.getCantidadProductos());
+                contador++;
+                try{
+                    System.out.println("Ingrese el ID del producto que desea agregar al carrito (para salir escriba 0) : ");
+                    agregar = scanner.nextLong();
 
 
-                if (agregar != 0 ) {
+                    if (agregar != 0 ) {
 
-                    int cantidad = producto.getCantidadProductos();
-                    if (cantidad> 0 ){
-                        producto.setCantidadProductos(cantidad-1);
-                        productoDAO.update(producto);
-                        System.out.println("*********************************************");
-                        System.out.println("*      Producto agregado                    *");
-                        System.out.println("*********************************************");
-                        System.out.println("El producto: " + producto.getNombreProducto() + " ha sido agregado a su carrito.");
-                        carrito.agregarProducto(producto);
-                    }else{
-                        System.out.println("No queda stock del producto seleccionado");
+                        int cantidad = producto.getCantidadProductos();
+                        if (cantidad> 0 ){
+                            producto.setCantidadProductos(cantidad-1);
+                            productoDAO.update(producto);
+                            System.out.println("*********************************************");
+                            System.out.println("*                                           *");
+                            System.out.println("*             PRODUCTO AGREGADO             *");
+                            System.out.println("*                                           *");
+                            System.out.println("*********************************************");
+                            System.out.println("El producto: " + producto.getNombreProducto() + " ha sido agregado a su carrito.");
+                            carrito.agregarProducto(producto);
+                        }else{
+                            System.out.println("No queda stock del producto seleccionado");
+                        }
+
                     }
 
+                } catch (InputMismatchException e) {
+                    System.out.println("ERROR: Debe ingresar un número de producto válido.");
+                } catch (NullPointerException e) {
+                    System.out.println("ERROR: Producto no encontrado en el catalogo.");
                 }
-
-            } catch (InputMismatchException e) {
-                System.out.println("Error: Debe ingresar un número de producto válido.");
-            } catch (NullPointerException e) {
-                System.out.println("Error: Producto no encontrado en el catalogo.");
             }
-        }
-    }while (agregar != 0);
+        }while (agregar != 0);
 
     }
 
@@ -358,27 +366,30 @@ public class App {
                 System.out.println("Ingrese opción valida");
             }else if (opcion == 1) {
                 try{
-                System.out.println("Ingrese el ID del producto que desea eliminar: ");
-                Long idEliminar = scanner.nextLong();
-                Producto productoAEliminar = buscarProductoPorId(carrito.getProductos(), idEliminar);
+                    System.out.println("Ingrese el ID del producto que desea eliminar: ");
+                    Long idEliminar = scanner.nextLong();
+                    Producto productoAEliminar = buscarProductoPorId(carrito.getProductos(), idEliminar);
 
-                System.out.println(productoAEliminar.getNombreProducto());
+                    System.out.println(productoAEliminar.getNombreProducto());
 
-                carrito.quitarProducto(productoAEliminar);
+                    carrito.quitarProducto(productoAEliminar);
 
-                ProductoDAO productoDAO = new ProductoDAO();
+                    ProductoDAO productoDAO = new ProductoDAO();
 
-                int cantidad = productoAEliminar.getCantidadProductos();
-                productoAEliminar.setCantidadProductos(cantidad + 1);
-                productoDAO.update(productoAEliminar);
+                    int cantidad = productoAEliminar.getCantidadProductos();
+                    productoAEliminar.setCantidadProductos(cantidad + 1);
+                    productoDAO.update(productoAEliminar);
 
-                System.out.println("*********************************************");
-                System.out.println("*           Producto eliminado              *");
-                System.out.println("*********************************************");
+                    System.out.println("*********************************************");
+                    System.out.println("*                                           *");
+                    System.out.println("*            PRODUCTO ELIMINADO             *");
+                    System.out.println("*                                           *");
+                    System.out.println("*********************************************");
 
-                System.out.println("El producto: " + productoAEliminar.getNombreProducto() + " ha sido elimando del carrito");
+                    System.out.println("El producto: " + productoAEliminar.getNombreProducto() + " ha sido elimando del carrito");
                 } catch (NullPointerException e) {
-                    System.out.println("Error: ID de producto no encontrado en su carrito.");}
+                    System.out.println("ERROR: ID de producto no encontrado en su carrito.");
+                }
             }
         }while (opcion != 2);
     }
@@ -395,14 +406,16 @@ public class App {
     private static boolean sinNumeros(String cadena) {
         boolean validador = cadena.matches("[a-zA-Z]+");
         if (validador == false){
-            System.out.println("Debe ingresar solo caracteres validos");}
+            System.out.println("Debe ingresar solo caracteres validos");
+        }
         return validador;
     }
 
     private static boolean esCorreo(String cadena) {
         boolean validador = cadena.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         if (validador == false){
-        System.out.println("Formato de correo no valido");}
+            System.out.println("Formato de correo no valido");
+        }
         return validador;
     }
 
